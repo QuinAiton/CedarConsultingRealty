@@ -1,5 +1,15 @@
+import Map from '../components/map';
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
-  return <div className={styles.container}>Home</div>;
-}
+const index = () => {
+  return (
+    <div className={styles.container}>
+      <section>
+        <Map />
+      </section>
+      <section className={styles.map}>The Realty Cards</section>
+    </div>
+  );
+};
+
+export default index;
