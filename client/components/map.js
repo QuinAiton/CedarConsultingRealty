@@ -1,6 +1,8 @@
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import ReactMapGL from 'react-map-gl';
+import Geocoder from 'react-map-gl-geocoder';
 
 const map = () => {
   const [viewport, setViewport] = useState({
@@ -11,13 +13,36 @@ const map = () => {
     zoom: 8,
   });
 
+  const mapRef = useRef();
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+
+  const handleGeocoderViewportChange = useCallback((newViewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+    return handleViewportChange({
+      ...newViewport,
+      ...geocoderDefaultOverrides,
+    });
+  }, []);
+
   return (
     <ReactMapGL
       {...viewport}
+      ref={mapRef}
       mapStyle='mapbox://styles/mapbox/streets-v9'
       mapboxApiAccessToken={process.env.NEXT_MAPBOX_TOKEN}
       onViewportChange={(viewport) => setViewport(viewport)}
-    />
+    >
+      <Geocoder
+        mapRef={mapRef}
+        onViewportChange={handleGeocoderViewportChange}
+        mapboxApiAccessToken={process.env.NEXT_MAPBOX_TOKEN}
+        position='top-left'
+      />
+    </ReactMapGL>
   );
 };
 
