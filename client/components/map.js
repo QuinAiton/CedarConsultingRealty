@@ -5,6 +5,7 @@ import ReactMapGL from 'react-map-gl';
 import Geocoder from 'react-map-gl-geocoder';
 
 const map = () => {
+  // Handles Map Configuration
   const [viewport, setViewport] = useState({
     width: '50vw',
     height: '100vh',
@@ -14,14 +15,14 @@ const map = () => {
   });
 
   const mapRef = useRef();
+
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
     []
   );
-
+  // handles Searchbar Component for Map
   const handleGeocoderViewportChange = useCallback((newViewport) => {
     const geocoderDefaultOverrides = { transitionDuration: 1000 };
-
     return handleViewportChange({
       ...newViewport,
       ...geocoderDefaultOverrides,
