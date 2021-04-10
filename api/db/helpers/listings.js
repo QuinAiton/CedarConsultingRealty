@@ -1,4 +1,3 @@
-const faker = require('faker');
 const fs = require('fs');
 
 // created random number from 1 to num
