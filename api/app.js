@@ -27,9 +27,11 @@ const client = new pg.Client({
 client
   .connect()
   .then(() => {
-    console.log('Database connected');
+    console.log(chalk.green('Database connected'));
   })
-  .catch((e) => console.log(`Error connecting to Postgres server:\n${e}`));
+  .catch((e) =>
+    console.log(chalk.red(`Error connecting to Postgres server:\n${e}`))
+  );
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
