@@ -1,3 +1,7 @@
+// load .env data into process.env
+require('dotenv').config();
+
+// Web server modules
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -10,6 +14,24 @@ const usersRouter = require('./routes/users');
 
 // App Initializer
 const app = express();
+
+// PG database client/connection setup
+const pg = require('pg');
+const client = new pg.Client({
+  connectionString: process.env.DATABASE_URL || '',
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+client
+  .connect()
+  .then(() => {
+    console.log(chalk.green('Database connected'));
+  })
+  .catch((e) =>
+    console.log(chalk.red(`Error connecting to Postgres server:\n${e}`))
+  );
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
