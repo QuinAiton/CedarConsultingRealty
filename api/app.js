@@ -7,37 +7,35 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const chalk = require('chalk');
 
 // Route Imports
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const listingsRouter = require('./routes/listings');
 
 // App Initializer
 const app = express();
 
-// PG database client/connection setup
-const pg = require('pg');
-const client = new pg.Client({
-  connectionString: process.env.DATABASE_URL || '',
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-client
-  .connect()
-  .then(() => {
-    console.log(chalk.green('Database connected'));
+// Database Config
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
   })
-  .catch((e) =>
-    console.log(chalk.red(`Error connecting to Postgres server:\n${e}`))
-  );
+  .then(() => console.log(chalk.green('Your Database is Connected')))
+  .catch((err) => {
+    console.log(chalk.red('Error', err.message));
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // middleware
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -46,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/listings', listingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
