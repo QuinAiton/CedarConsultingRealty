@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const chalk = require('chalk');
 
+const Listing = require('./db/models/Listing');
+
 // Route Imports
 const indexRouter = require('./routes/index');
 const listingsRouter = require('./routes/listings');

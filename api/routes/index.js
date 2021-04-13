@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const Listing = require('../db/models/Listing');
+const chalk = require('chalk');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+/* Get data from Database*/
+router.get('/', (req, res) => {});
 
 module.exports = router;
