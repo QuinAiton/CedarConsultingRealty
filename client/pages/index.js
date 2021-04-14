@@ -1,6 +1,6 @@
 // Style Imports
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Index from '../styles/index.module.css';
+import Index from '../styles/index.module.scss';
 // module Imports
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -33,7 +33,7 @@ const index = () => {
         street={listing.Street}
         city={listing.City}
         country={listing.country}
-        parkingSpace={listing.parking_spaces}
+        parking={listing.parking_spaces}
         bathrooms={listing.number_of_bathrooms}
         bedrooms={listing.number_of_bedrooms}
         created={listing.created}
