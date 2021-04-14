@@ -14,7 +14,7 @@ const Listings = (props) => {
           <span className={listings.price}>${props.price}</span>
         </div>
         <div className={listings.address}>
-          {props.street} | {props.city} | {props.country}
+          {props.street}, {props.country}
         </div>
       </div>
     </div>

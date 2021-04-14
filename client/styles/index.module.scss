@@ -10,10 +10,11 @@
   }
   .listings {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     width: 50%;
     height: 100vh;
     padding: 0px 10px;
+    overflow-y: scroll;
   }
 
   @media (max-width: 600px) {

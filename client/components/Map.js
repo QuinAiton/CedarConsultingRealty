@@ -8,9 +8,9 @@ const Map = (props) => {
   const [viewport, setViewport] = useState({
     width: '50vw',
     height: '100vh',
-    latitude: 49.06245087463475,
-    longitude: -123.46848129153817,
-    zoom: 8,
+    latitude: 49.235294,
+    longitude: -123.001659,
+    zoom: 10,
   });
 
   const mapRef = useRef();
