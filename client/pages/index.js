@@ -1,8 +1,13 @@
+// Style Imports
+import 'mapbox-gl/dist/mapbox-gl.css';
+import Index from '../styles/index.module.css';
+// module Imports
 import React, { useEffect, useState } from 'react';
-import Map from '../components/Map';
-import styles from '../styles/Home.module.css';
 import axios from 'axios';
 import chalk from 'chalk';
+// Component Imports
+import Map from '../components/Map';
+import Listings from '../components/Listings';
 const index = () => {
   const [state, setState] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -19,10 +24,29 @@ const index = () => {
       });
   }, []);
 
+  const listings = state.map((listing, index) => {
+    return (
+      <Listings
+        key={index}
+        image={listing.image}
+        price={listing.price}
+        street={listing.Street}
+        city={listing.City}
+        country={listing.country}
+        parkingSpace={listing.parking_spaces}
+        bathrooms={listing.number_of_bathrooms}
+        bedrooms={listing.number_of_bedrooms}
+        created={listing.created}
+      />
+    );
+  });
+
   return (
-    <div className={styles.container}>
-      <section>{isLoading ? <Map state={state} /> : <p>Loading</p>}</section>
-      <section className={styles.map}>The Realty Cards</section>
+    <div className={Index.container}>
+      {isLoading ? <Map className={Index.map} state={state} /> : <p>Loading</p>}
+      <section className={Index.listings} state={state}>
+        {listings}
+      </section>
     </div>
   );
 };

@@ -10,6 +10,9 @@
 .map {
   width: 50%;
 }
+.listings {
+  width: 50%;
+}
 
 @media (max-width: 600px) {
   .grid {
