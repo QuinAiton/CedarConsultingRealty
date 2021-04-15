@@ -1,17 +1,16 @@
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import * as React from 'react';
-import { useState, useRef, useCallback } from 'react';
-import ReactMapGL from 'react-map-gl';
+import React, { useState, useRef, useCallback } from 'react';
+import ReactMapGL, { Source, Layer } from 'react-map-gl';
 import Geocoder from 'react-map-gl-geocoder';
 
-const map = () => {
+const Map = (props) => {
   // Handles Map Configuration
   const [viewport, setViewport] = useState({
     width: '50vw',
     height: '100vh',
-    latitude: 49.06245087463475,
-    longitude: -123.46848129153817,
-    zoom: 8,
+    latitude: 49.235294,
+    longitude: -123.001659,
+    zoom: 10,
   });
 
   const mapRef = useRef();
@@ -29,6 +28,32 @@ const map = () => {
     });
   }, []);
 
+  // Creates GeoJson with from Data
+  const geojson = {
+    type: 'FeatureCollection',
+    features: [],
+  };
+
+  props.state.map((listing) => {
+    geojson.features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: listing.location.coordinates,
+      },
+      properties: [listing],
+    });
+  });
+
+  const layerStyle = {
+    id: 'point',
+    type: 'circle',
+    paint: {
+      'circle-radius': 4,
+      'circle-color': '#007cbf',
+    },
+  };
+
   return (
     <ReactMapGL
       {...viewport}
@@ -37,6 +62,10 @@ const map = () => {
       mapboxApiAccessToken={process.env.NEXT_MAPBOX_TOKEN}
       onViewportChange={(viewport) => setViewport(viewport)}
     >
+      <Source id='my-data' type='geojson' data={geojson}>
+        <Layer {...layerStyle} />
+      </Source>
+
       <Geocoder
         mapRef={mapRef}
         onViewportChange={handleGeocoderViewportChange}
@@ -47,4 +76,4 @@ const map = () => {
   );
 };
 
-export default map;
+export default Map;
