@@ -1,6 +1,6 @@
 // Style Imports
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Index from '../styles/index.module.scss';
+import styles from '../styles/index.module.scss';
 // module Imports
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import Listings from '../components/Listings';
 const index = () => {
   const [state, setState] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  
   useEffect(() => {
     const url = 'http://localhost:9000/listings';
     axios
@@ -42,9 +43,13 @@ const index = () => {
   });
 
   return (
-    <div className={Index.container}>
-      {isLoading ? <Map className={Index.map} state={state} /> : <p>Loading</p>}
-      <section className={Index.listings} state={state}>
+    <div className={styles.container}>
+      {isLoading ? (
+        <Map className={styles.map} state={state} />
+      ) : (
+        <p>Loading</p>
+      )}
+      <section className={styles.listings} state={state}>
         {listings}
       </section>
     </div>

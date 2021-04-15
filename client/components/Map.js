@@ -28,6 +28,7 @@ const Map = (props) => {
     });
   }, []);
 
+  // Creates GeoJson with from Data
   const geojson = {
     type: 'FeatureCollection',
     features: [],
@@ -40,6 +41,7 @@ const Map = (props) => {
         type: 'Point',
         coordinates: listing.location.coordinates,
       },
+      properties: [listing],
     });
   });
 
@@ -47,7 +49,7 @@ const Map = (props) => {
     id: 'point',
     type: 'circle',
     paint: {
-      'circle-radius': 10,
+      'circle-radius': 4,
       'circle-color': '#007cbf',
     },
   };
